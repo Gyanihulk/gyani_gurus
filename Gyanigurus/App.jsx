@@ -8,11 +8,10 @@ import {
 } from 'react-native-paper';
 import Login from './screens/Login';
 import {ApolloClient, InMemoryCache, createHttpLink,ApolloProvider } from '@apollo/client';
+import { client } from './lib/apollo/client';
+import { useApollo } from './lib/apollo/useApollo';
 
-const client = new ApolloClient({
-  link: createHttpLink({uri: 'http://localhost:3000/api/graphql'}),
-  cache: new InMemoryCache(),
-});
+
 
 const Stack = createStackNavigator();
 function MyStack() {
@@ -52,9 +51,10 @@ const theme = {
 };
 
 export default function App() {
+  const apolloClient=useApollo()
   return (
     <PaperProvider theme={theme}>
-      <ApolloProvider client={client}>
+      <ApolloProvider client={apolloClient}>
         <NavigationContainer>
           <MyStack />
         </NavigationContainer>
